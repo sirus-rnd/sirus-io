@@ -1,0 +1,77 @@
+{
+  "Main" : {
+    "uid" : {
+      "type" : "UID",
+      "config" : {
+        "label" : "slug",
+        "placeholder" : "unique-page-slug"
+      }
+    },
+    "title" : {
+      "type" : "Text",
+      "config" : {
+        "label" : "title",
+        "placeholder" : "product title"
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph, preformatted, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, rtl",
+        "allowTargetBlank" : true,
+        "label" : "description",
+        "placeholder" : "description"
+      }
+    },
+    "features" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "image" : {
+            "type" : "Image",
+            "config" : {
+              "constraint" : {
+                "width" : 500,
+                "height" : 500
+              },
+              "thumbnails" : [ ],
+              "label" : "image"
+            }
+          },
+          "name" : {
+            "type" : "Text",
+            "config" : {
+              "label" : "name",
+              "placeholder" : "product name"
+            }
+          },
+          "type" : {
+            "type" : "Text",
+            "config" : {
+              "label" : "type",
+              "placeholder" : "product type"
+            }
+          },
+          "information" : {
+            "type" : "StructuredText",
+            "config" : {
+              "multi" : "paragraph, preformatted, heading2, heading3, heading4, heading5, strong, em, hyperlink, image, embed, list-item, o-list-item",
+              "allowTargetBlank" : true,
+              "label" : "information",
+              "placeholder" : "product information"
+            }
+          },
+          "link" : {
+            "type" : "Link",
+            "config" : {
+              "allowTargetBlank" : true,
+              "label" : "link",
+              "placeholder" : "product link"
+            }
+          }
+        },
+        "label" : "features"
+      }
+    }
+  }
+}

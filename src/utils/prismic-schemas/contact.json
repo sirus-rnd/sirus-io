@@ -1,0 +1,40 @@
+{
+  "Main" : {
+    "title" : {
+      "type" : "Text",
+      "config" : {
+        "label" : "title",
+        "placeholder" : "contact title"
+      }
+    },
+    "phone_number" : {
+      "type" : "Text",
+      "config" : {
+        "label" : "phone number",
+        "placeholder" : "phone number"
+      }
+    },
+    "contact_email" : {
+      "type" : "Text",
+      "config" : {
+        "label" : "contact email",
+        "placeholder" : "contact email"
+      }
+    },
+    "address" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph",
+        "allowTargetBlank" : true,
+        "label" : "address",
+        "placeholder" : "address"
+      }
+    },
+    "address_geolocation" : {
+      "type" : "GeoPoint",
+      "config" : {
+        "label" : "address geolocation"
+      }
+    }
+  }
+}
