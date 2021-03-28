@@ -4,7 +4,8 @@ module.exports = {
   siteMetadata: {
     title: 'Sirus Teknologi Utama',
     titleTemplate: '%s · Ekosistem Layanan Kesehatan Berkelanjutan',
-    description: 'Suspendisse potenti. Donec auctor quam et tortor condimentum, volutpat facilisis lorem facilisis.',
+    description:
+      'Suspendisse potenti. Donec auctor quam et tortor condimentum, volutpat facilisis lorem facilisis.',
     url: process.env.BASE_URL,
     siteUrl: process.env.BASE_URL,
     image: 'images/banner.jpg',
@@ -68,5 +69,22 @@ module.exports = {
     // SEO & marketing
     'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-google-marketing-platform',
+      options: {
+        dataLayer: {
+          gaPropertyId: process.env.GA_PROPERTY_ID,
+        },
+        tagmanager: {
+          id: process.env.GA_ID,
+        },
+        analytics: {
+          id: process.env.GTM_ID,
+        },
+        optimize: {
+          id: process.env.OPT_ID,
+        },
+      },
+    },
   ],
 };
