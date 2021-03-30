@@ -76,10 +76,10 @@ module.exports = {
           gaPropertyId: process.env.GA_PROPERTY_ID,
         },
         tagmanager: {
-          id: process.env.GA_ID,
+          id: process.env.GTM_ID,
         },
         analytics: {
-          id: process.env.GTM_ID,
+          id: process.env.GA_ID,
         },
         optimize: {
           id: process.env.OPT_ID,

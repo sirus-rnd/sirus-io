@@ -11,7 +11,7 @@ const FullArticle: React.FC<FullArticleProps> = props => {
     <article>
       <header>
         <ArticleTags tw="text-lg" tags={props.tags} />
-        <h1 tw="text-primary text-7xl">{props.title}</h1>
+        <h1 tw="text-primary lg:text-7xl">{props.title}</h1>
         <ArticlePublishingInfo tw="text-base" author={props.author} released={props.released} />
       </header>
       <section dangerouslySetInnerHTML={{ __html: props.content }}></section>
