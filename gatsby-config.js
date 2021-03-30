@@ -70,20 +70,11 @@ module.exports = {
     'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-plugin-google-marketing-platform',
+      resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        dataLayer: {
-          gaPropertyId: process.env.GA_PROPERTY_ID,
-        },
-        tagmanager: {
-          id: process.env.GTM_ID,
-        },
-        analytics: {
-          id: process.env.GA_ID,
-        },
-        optimize: {
-          id: process.env.OPT_ID,
-        },
+        id: process.env.GTM_ID,
+        includeInDevelopment: false,
+        routeChangeEventName: 'page-route-changed',
       },
     },
   ],
