@@ -4,6 +4,7 @@ import { RichText } from 'prismic-reactjs';
 import { PrismicImageType, PrismicStructuredTextType } from '../graphql-types';
 import Img, { FluidObject } from 'gatsby-image';
 import { css } from '@emotion/react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 export interface TabbedContentProp {
   items: ContentItem[];
@@ -63,30 +64,50 @@ class TabbedContent extends React.Component<TabbedContentProp, TabbedContentStat
           })}
         </div>
 
-        <div
-          css={css`
-            ${this.props.rightNav && rightContentStyle}
-          `}
-        >
-          <h1 tw="text-primary">{activeItem?.title}</h1>
-          <div>
-            <RichText render={activeItem?.content?.raw} />
-          </div>
-        </div>
+        <SwitchTransition mode="out-in">
+          <CSSTransition<undefined>
+            key={activeIdx}
+            classNames="slide"
+            addEndListener={(node: HTMLElement, done: () => void) => {
+              node.addEventListener('transitionend', done, false);
+            }}
+          >
+            <div
+              css={css`
+                ${this.props.rightNav && rightContentStyle}
+              `}
+            >
+              <h1 tw="text-primary">{activeItem?.title}</h1>
+              <div>
+                <RichText render={activeItem?.content?.raw} />
+              </div>
+            </div>
+          </CSSTransition>
+        </SwitchTransition>
 
-        <div
-          css={css`
-            ${this.props.rightNav && rightImageStyle}
-          `}
-        >
-          <Img
-            css={css`
-              width: 100%;
-            `}
-            fluid={activeItem?.image?.fluid as FluidObject}
-            alt={activeItem?.image?.alt as string}
-          />
-        </div>
+        <SwitchTransition mode="out-in">
+          <CSSTransition<undefined>
+            key={activeIdx}
+            classNames="slide-down"
+            addEndListener={(node: HTMLElement, done: () => void) => {
+              node.addEventListener('transitionend', done, false);
+            }}
+          >
+            <div
+              css={css`
+                ${this.props.rightNav && rightImageStyle}
+              `}
+            >
+              <Img
+                css={css`
+                  width: 100%;
+                `}
+                fluid={activeItem?.image?.fluid as FluidObject}
+                alt={activeItem?.image?.alt as string}
+              />
+            </div>
+          </CSSTransition>
+        </SwitchTransition>
       </div>
     );
   }

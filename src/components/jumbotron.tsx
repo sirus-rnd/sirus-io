@@ -71,60 +71,6 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
         css={css`
           background: #373737;
           position: relative;
-          .fade-enter {
-            opacity: 0;
-          }
-          .fade-exit {
-            opacity: 1;
-          }
-          .fade-enter-active {
-            opacity: 1;
-          }
-          .fade-exit-active {
-            opacity: 0;
-          }
-          .fade-enter-active,
-          .fade-exit-active {
-            transition: opacity 500ms;
-          }
-          .slide-enter {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          .slide-enter-active {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          }
-          .slide-exit {
-            opacity: 1;
-          }
-          .slide-exit-active {
-            opacity: 0;
-            transform: translateX(20px);
-            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-          }
-          .slide-down-enter {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          .slide-down-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          }
-          .slide-down-exit {
-            opacity: 1;
-          }
-          .slide-down-exit-active {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-          }
         `}
       >
         <SwitchTransition mode="out-in">
