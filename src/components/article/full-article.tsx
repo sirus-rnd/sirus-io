@@ -4,6 +4,7 @@ import { Article, ArticlePublishingInfo, ArticleTags } from './article';
 
 export interface FullArticleProps extends Article {
   content: string;
+  toc: any;
 }
 
 const FullArticle: React.FC<FullArticleProps> = props => {

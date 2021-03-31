@@ -21,7 +21,8 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
     })) as ArticleAtribution[],
     slug: post?.slug as string,
     image: post?.feature_image as string,
-    content: post?.html as string,
+    content: post?.childHtmlRehype?.html,
+    toc: post?.childHtmlRehype?.tableOfContents
   };
 
   // SEO
@@ -109,6 +110,10 @@ export const postQuery = graphql`
   query getPost($slug: String!) {
     ghostPost(slug: { eq: $slug }) {
       ...GhostPostFields
+      childHtmlRehype {
+        html
+        tableOfContents
+      }
     }
     ghostSettings {
       ...GhostSettingsFields

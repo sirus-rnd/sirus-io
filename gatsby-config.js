@@ -54,6 +54,21 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-transformer-rehype',
+      options: {
+        filter: node => node.internal.type === `GhostPost`,
+        source: node => node.html,
+        plugins: [
+          {
+            resolve: 'gatsby-rehype-prismjs',
+          },
+          {
+            resolve: 'gatsby-rehype-inline-images',
+          },
+        ],
+      },
+    },
+    {
       resolve: 'gatsby-source-prismic',
       options: {
         repositoryName: process.env.PRISMIC_REPO_NAME,
