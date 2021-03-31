@@ -1,0 +1,9 @@
+{
+  "name": "ghost-images",
+  "description": "Gatsby plugin that downloads images from Ghost CMS to be used with Gatsby image tools.",
+  "version": "0.0.1",
+  "dependencies": {
+    "gatsby-source-filesystem": "^3.0.0",
+    "lodash": "^4.17.21"
+  }
+}

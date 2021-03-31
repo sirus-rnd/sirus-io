@@ -87,6 +87,44 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
           .fade-exit-active {
             transition: opacity 500ms;
           }
+          .slide-enter {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          .slide-enter-active {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .slide-exit {
+            opacity: 1;
+          }
+          .slide-exit-active {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .slide-down-enter {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          .slide-down-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .slide-down-exit {
+            opacity: 1;
+          }
+          .slide-down-exit-active {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          }
         `}
       >
         <SwitchTransition mode="out-in">
@@ -94,7 +132,7 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
             key={activeIdx}
             classNames="fade"
             addEndListener={(node: HTMLElement, done: () => void) => {
-              node.addEventListener("transitionend", done, false);
+              node.addEventListener('transitionend', done, false);
             }}
           >
             <Img
@@ -129,18 +167,38 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
             `}
           >
             <div>
-              <h1 tw="text-5xl lg:text-7xl text-primary">{activeItem?.title}</h1>
-              <p
-                css={css`
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  display: -webkit-box;
-                  -webkit-line-clamp: 5; /* number of lines to show */
-                  -webkit-box-orient: vertical;
-                `}
-              >
-                {activeItem?.content}
-              </p>
+              <SwitchTransition mode="out-in">
+                <CSSTransition<undefined>
+                  key={activeIdx}
+                  classNames="slide"
+                  addEndListener={(node: HTMLElement, done: () => void) => {
+                    node.addEventListener('transitionend', done, false);
+                  }}
+                >
+                  <h1 tw="text-5xl lg:text-7xl text-primary">{activeItem?.title}</h1>
+                </CSSTransition>
+              </SwitchTransition>
+              <SwitchTransition mode="out-in">
+                <CSSTransition<undefined>
+                  key={activeIdx}
+                  classNames="slide-down"
+                  addEndListener={(node: HTMLElement, done: () => void) => {
+                    node.addEventListener('transitionend', done, false);
+                  }}
+                >
+                  <p
+                    css={css`
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 5; /* number of lines to show */
+                      -webkit-box-orient: vertical;
+                    `}
+                  >
+                    {activeItem?.content}
+                  </p>
+                </CSSTransition>
+              </SwitchTransition>
               <ul
                 tw="m-0 mt-4 lg:mt-12 p-0 flex justify-start"
                 css={css`

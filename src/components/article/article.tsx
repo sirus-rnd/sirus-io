@@ -3,6 +3,7 @@ import tw from 'twin.macro';
 import { css } from '@emotion/react';
 import { DateTime } from 'luxon';
 import { Link } from 'gatsby';
+import { FluidObject } from 'gatsby-image';
 
 export interface Article {
   tags: ArticleAtribution[];
@@ -11,7 +12,7 @@ export interface Article {
   author: ArticleAtribution;
   excerpt: string;
   slug: string;
-  image?: string;
+  image?: FluidObject;
 }
 
 export interface ArticleAtribution {
@@ -31,6 +32,18 @@ export const linkStyle = css`
   }
 `;
 
+export const linkDarkStyle = css`
+  font-weight: normal;
+  color: #cccccc;
+  a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      color: white;
+    }
+  }
+`;
+
 export const PrimaryLink = tw(Link)`
   text-primary font-bold no-underline
 `;
@@ -38,6 +51,7 @@ export const PrimaryLink = tw(Link)`
 export interface ArticlePublishingInfoProps {
   released: Date;
   author: ArticleAtribution;
+  dark?: boolean;
   style?: CSSProperties;
   className?: string;
 }
@@ -45,11 +59,12 @@ export interface ArticlePublishingInfoProps {
 export const ArticlePublishingInfo: React.FC<ArticlePublishingInfoProps> = ({
   released,
   author,
+  dark,
   style,
   className,
 }) => {
   return (
-    <h5 className={className} style={style} css={[linkStyle]}>
+    <h5 className={className} style={style} css={[dark ? linkDarkStyle : linkStyle]}>
       Dirilis {DateTime.fromJSDate(released).setLocale('id').toLocaleString(DateTime.DATE_HUGE)}{' '}
       oleh <Link to={`/penulis/${author.slug}`}>{author.name}</Link>
     </h5>
@@ -58,13 +73,14 @@ export const ArticlePublishingInfo: React.FC<ArticlePublishingInfoProps> = ({
 
 export interface ArticleTagsProps {
   tags: ArticleAtribution[];
+  dark?: boolean;
   style?: CSSProperties;
   className?: string;
 }
 
-export const ArticleTags: React.FC<ArticleTagsProps> = ({ tags, style, className }) => {
+export const ArticleTags: React.FC<ArticleTagsProps> = ({ tags, dark, style, className }) => {
   return (
-    <h4 className={className} style={style} css={[linkStyle]}>
+    <h4 className={className} style={style} css={[dark ? linkDarkStyle : linkStyle]}>
       {tags.map(tag => (
         <Link key={tag.slug} to={`/kategori/${tag.slug}`}>
           {tag.name}

@@ -18,8 +18,8 @@ const Index: React.FC<PageProps<GetIndexPostQuery, PageContext>> = ({
   const banner: ContentBannerProps = {
     title: data.ghostSettings?.title as string,
     information: data.ghostSettings?.description as string,
-    tags: [{ name: 'blog', slug: '/artikel' }],
-    image: data.ghostSettings?.cover_image as string,
+    subheader: 'Blog',
+    image: data.ghostSettings?.coverImageSharp?.childImageSharp?.fluid,
   };
   const navs: SidenavProps = {
     title: 'kategori',
@@ -43,7 +43,7 @@ const Index: React.FC<PageProps<GetIndexPostQuery, PageContext>> = ({
           slug: tag?.slug,
         })),
         slug: edge?.node?.slug,
-        image: edge?.node?.feature_image,
+        image: edge?.node?.featureImageSharp?.childImageSharp?.fluid,
       } as BulletArticleProps),
   );
 
@@ -138,8 +138,7 @@ export const pageQuery = graphql`
     allGhostTag(sort: { order: ASC, fields: name }) {
       edges {
         node {
-          name
-          slug
+          ...GhostTagFields
         }
       }
     }

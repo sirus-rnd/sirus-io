@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { graphql, PageProps } from 'gatsby';
 import BaseLayout from '../layouts/base';
 import { css } from '@emotion/react';
+import Img, { FluidObject } from 'gatsby-image';
 import BulletArticle, { BulletArticleProps } from '../components/article/bullet-article';
 import { Separator } from '../components/scaffolds';
 import { GetAuthorQuery } from '../graphql-types';
@@ -26,7 +27,7 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
           slug: tag?.slug,
         })),
         slug: edge?.node?.slug,
-        image: edge?.node?.feature_image,
+        image: edge?.node?.featureImageSharp?.childImageSharp?.fluid,
       } as BulletArticleProps),
   );
   const author = data.ghostAuthor;
@@ -76,34 +77,41 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
       </Helmet>
       <section
         css={css`
-          background-image: url('${author?.cover_image}');
-          background-size: cover;
+          position: relative;
         `}
       >
+        <Img
+          fluid={author?.coverImageSharp?.childImageSharp?.fluid as FluidObject}
+          css={css`
+            height: 300px;
+          `}
+        />
         <div
           tw="py-16 px-8 text-white"
           css={css`
             background: rgba(0, 0, 0, 0.5);
-            color: white;
             background: linear-gradient(
               90deg,
               rgba(0, 0, 0, 0.9) 0%,
               rgba(0, 0, 0, 0.8) 50%,
               rgba(0, 0, 0, 0.4) 100%
             );
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
           `}
         >
           <div tw="container grid grid-cols-5 gap-12">
             <div tw="col-span-3 col-start-2 flex items-center">
-              <div
+              <Img
                 tw="rounded-full"
+                fluid={author?.profileImageSharp?.childImageSharp?.fluid as FluidObject}
                 css={css`
                   width: 200px;
                   height: 200px;
-                  background-image: url('${author?.profile_image}');
-                  background-size: cover;
                 `}
-              ></div>
+              />
               <div tw="flex-1 pl-8">
                 <h1 tw="text-primary">{author?.name}</h1>
                 <p>{author?.bio ?? '-'}</p>

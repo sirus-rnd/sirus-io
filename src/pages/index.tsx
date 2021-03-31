@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import 'twin.macro';
 import { Helmet } from 'react-helmet';
 import { css } from '@emotion/react';
+import { FluidObject } from 'gatsby-image';
 import BaseLayout from '../layouts/base';
 import Jumbotron, { JumbotronItem } from '../components/jumbotron';
 import SimpleArticle from '../components/article/simple-article';
@@ -10,7 +11,7 @@ import FeaturedArticle from '../components/article/featured-article';
 import { Separator } from '../components/scaffolds';
 import {
   GetHomepageDataQuery,
-  GhostPostEdge,
+  GhostPostFieldsFragment,
   PrismicHomepageBodyFeaturedContents,
 } from '../graphql-types';
 import { Article } from '../components/article/article';
@@ -20,15 +21,15 @@ export interface HomeProps {
   data: GetHomepageDataQuery;
 }
 
-function ghostEdgeToArticle(edge: GhostPostEdge): Article {
+function ghostEdgeToArticle(post: GhostPostFieldsFragment): Article {
   return {
-    author: { name: edge.node.authors[0]?.name, slug: edge.node.authors[0]?.slug },
-    tags: edge?.node?.tags?.map(tag => ({ name: tag?.name, slug: tag?.slug })),
-    excerpt: edge?.node?.excerpt,
-    released: new Date(edge?.node?.published_at),
-    slug: edge?.node?.slug,
-    title: edge?.node?.title,
-    image: edge?.node?.feature_image,
+    author: { name: post.authors[0]?.name, slug: post.authors[0]?.slug },
+    tags: post.tags?.map(tag => ({ name: tag?.name, slug: tag?.slug })),
+    excerpt: post.excerpt,
+    released: new Date(post?.published_at),
+    slug: post.slug,
+    title: post.title,
+    image: post.featureImageSharp?.childImageSharp?.fluid as FluidObject,
   } as Article;
 }
 
@@ -42,11 +43,11 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         image: item?.image?.fluid,
       } as JumbotronItem),
   ) as JumbotronItem[];
-  const firstNode = data?.allGhostPost?.edges[0];
-  const article = firstNode ? ghostEdgeToArticle(firstNode as GhostPostEdge) : null;
+  const firstNode: GhostPostFieldsFragment = data?.allGhostPost?.edges[0]?.node;
+  const article = firstNode ? ghostEdgeToArticle(firstNode) : null;
   const articles = data?.allGhostPost?.edges
     ?.filter((_, i) => i > 0)
-    ?.map(edge => ghostEdgeToArticle(edge as GhostPostEdge));
+    ?.map(edge => ghostEdgeToArticle(edge?.node as GhostPostFieldsFragment));
 
   // SEO data
   const siteMeta = data.site?.siteMetadata;
@@ -194,22 +195,7 @@ export const query = graphql`
       totalCount
       edges {
         node {
-          id
-          slug
-          title
-          excerpt
-          feature_image
-          published_at
-          tags {
-            id
-            slug
-            name
-          }
-          authors {
-            id
-            name
-            slug
-          }
+          ...GhostPostFields
         }
       }
     }

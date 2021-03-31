@@ -69,6 +69,30 @@ module.exports = {
       },
     },
     {
+      resolve: 'ghost-images',
+      options: {
+        lookup: [
+          {
+            type: 'GhostPost',
+            imgTags: ['feature_image'],
+          },
+          {
+            type: 'GhostTag',
+            imgTags: ['feature_image'],
+          },
+          {
+            type: 'GhostAuthor',
+            imgTags: ['profile_image', 'cover_image'],
+          },
+          {
+            type: 'GhostSettings',
+            imgTags: ['cover_image'],
+          },
+        ],
+        verbose: true,
+      },
+    },
+    {
       resolve: 'gatsby-source-prismic',
       options: {
         repositoryName: process.env.PRISMIC_REPO_NAME,

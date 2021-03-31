@@ -13,8 +13,8 @@ const Tag: React.FC<PageProps<GetTagQuery, PageContext>> = ({ data, pageContext,
   const banner: ContentBannerProps = {
     title: data.ghostTag?.name as string,
     information: data.ghostTag?.description as string,
-    tags: [{ name: 'kategori', slug: '/artikel' }],
-    image: data.ghostTag?.feature_image as string,
+    subheader: 'kategori',
+    image: data.ghostTag?.featureImageSharp?.childImageSharp?.fluid,
   };
   const articles: BulletArticleProps[] = data.allGhostPost?.edges?.map(
     edge =>
@@ -28,7 +28,7 @@ const Tag: React.FC<PageProps<GetTagQuery, PageContext>> = ({ data, pageContext,
           slug: tag?.slug,
         })),
         slug: edge?.node?.slug,
-        image: edge?.node?.feature_image,
+        image: edge?.node?.featureImageSharp?.childImageSharp?.fluid,
       } as BulletArticleProps),
   );
 
@@ -38,7 +38,7 @@ const Tag: React.FC<PageProps<GetTagQuery, PageContext>> = ({ data, pageContext,
   const canonical = `${siteMeta.url}/${location.pathname}`;
   const title = banner.title || blogMeta.title;
   const description = banner.information || blogMeta.description;
-  const shareImage = banner.image || blogMeta.cover_image;
+  const shareImage = data.ghostTag?.feature_image || blogMeta.cover_image;
   const publisherLogo = blogMeta.logo;
 
   const jsonLd = {

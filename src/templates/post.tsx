@@ -20,7 +20,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
       slug: tag?.slug as string,
     })) as ArticleAtribution[],
     slug: post?.slug as string,
-    image: post?.feature_image as string,
+    image: post?.featureImageSharp?.childImageSharp?.fluid,
     content: post?.childHtmlRehype?.html,
     toc: post?.childHtmlRehype?.tableOfContents
   };
@@ -67,7 +67,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
   };
 
   return (
-    <BaseLayout>
+    <BaseLayout dark={true}>
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -93,13 +93,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
         <meta name="twitter:image" content={shareImage} />
         <meta property="og:image" content={shareImage} />
       </Helmet>
-      <section tw="py-16 px-8">
-        <div tw="container grid grid-cols-1 md:grid-cols-5">
-          <div tw="md:col-start-2 md:col-end-5">
-            <FullArticle {...article} />
-          </div>
-        </div>
-      </section>
+      <FullArticle {...article} />
     </BaseLayout>
   );
 };

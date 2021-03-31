@@ -54,6 +54,18 @@ export const prismicImageFluidField = graphql`
   }
 `;
 
+export const gatsbyImageFluidField = graphql`
+  fragment ImageSharpFluidFields on ImageSharpFluid {
+    base64
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
+    sizes
+    aspectRatio
+  }
+`;
+
 // Used for tag archive pages
 export const ghostTagFields = graphql`
   fragment GhostTagFields on GhostTag {
@@ -64,6 +76,13 @@ export const ghostTagFields = graphql`
     description
     meta_title
     meta_description
+    featureImageSharp {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...ImageSharpFluidFields
+        }
+      }
+    }
   }
 `;
 
@@ -79,6 +98,20 @@ export const ghostAuthorFields = graphql`
     website
     twitter
     facebook
+    coverImageSharp {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...ImageSharpFluidFields
+        }
+      }
+    }
+    profileImageSharp {
+      childImageSharp {
+        fluid(maxWidth: 500, maxHeight: 500) {
+          ...ImageSharpFluidFields
+        }
+      }
+    }
   }
 `;
 
@@ -94,6 +127,13 @@ export const ghostPostFields = graphql`
     excerpt
     custom_excerpt
     visibility
+    featureImageSharp {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...ImageSharpFluidFields
+        }
+      }
+    }
 
     # Dates formatted
     created_at_pretty: created_at(formatString: "DD MMMM, YYYY")
@@ -283,6 +323,13 @@ export const ghostSettingsFields = graphql`
     navigation {
       label
       url
+    }
+    coverImageSharp {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...ImageSharpFluidFields
+        }
+      }
     }
   }
 `;

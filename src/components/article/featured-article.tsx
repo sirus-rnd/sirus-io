@@ -2,6 +2,7 @@ import React from 'react';
 import 'twin.macro';
 import { Link } from 'gatsby';
 import { css } from '@emotion/react';
+import Img, { FluidObject } from 'gatsby-image';
 import { Article, ArticlePublishingInfo, ArticleTags, PrimaryLink } from './article';
 
 export type FeturedArticleProps = Article;
@@ -20,15 +21,14 @@ const FeaturedArticle: React.FC<FeturedArticleProps> = props => {
       <Link tw="text-primary no-underline" to={`/artikel/${props.slug}`}>
         <h1>{props.title}</h1>
       </Link>
-      <div
+      <Img
         tw="mb-6"
+        fluid={props.image as FluidObject}
         css={css`
           width: 100%;
           height: 300px;
-          background-image: url('${props.image}');
-          background-size: cover;
         `}
-      ></div>
+      />
       <p>{props.excerpt}</p>
       <PrimaryLink to={`/artikel/${props.slug}`}>lebih lanjut...</PrimaryLink>
     </article>
