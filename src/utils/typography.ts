@@ -1,7 +1,8 @@
 import Typography from 'typography';
+import CodePlugin from 'typography-plugin-code';
 
 const typography = new Typography({
-  baseFontSize: 'px',
+  baseFontSize: '16px',
   baseLineHeight: 1.5,
   scaleRatio: 2.75,
   headerFontFamily: ['Poppins'],
@@ -18,6 +19,7 @@ const typography = new Typography({
   ],
   bodyFontFamily: ['Heebo'],
   bodyWeight: 400,
+  plugins: [new CodePlugin()],
 });
 
 // Export helper functions

@@ -50,8 +50,8 @@ export const ArticlePublishingInfo: React.FC<ArticlePublishingInfoProps> = ({
 }) => {
   return (
     <h5 className={className} style={style} css={[linkStyle]}>
-      {DateTime.fromJSDate(released).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}, oleh{' '}
-      <Link to={`/penulis/${author.slug}`}>{author.name}</Link>
+      Dirilis {DateTime.fromJSDate(released).setLocale('id').toLocaleString(DateTime.DATE_HUGE)}{' '}
+      oleh <Link to={`/penulis/${author.slug}`}>{author.name}</Link>
     </h5>
   );
 };
@@ -66,7 +66,9 @@ export const ArticleTags: React.FC<ArticleTagsProps> = ({ tags, style, className
   return (
     <h4 className={className} style={style} css={[linkStyle]}>
       {tags.map(tag => (
-        <Link key={tag.slug} to={`/kategori/${tag.slug}`}>{tag.name}</Link>
+        <Link key={tag.slug} to={`/kategori/${tag.slug}`}>
+          {tag.name}
+        </Link>
       ))}
     </h4>
   );

@@ -7,7 +7,7 @@ const { paginate } = require('gatsby-awesome-pagination');
  * All pages and product from prismic
  */
 exports.createPages = async ({ graphql, actions }) => {
-  const postsPerPage = 1;
+  const postsPerPage = 10;
   const { createPage } = actions;
 
   const result = await graphql(`
