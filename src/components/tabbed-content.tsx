@@ -117,6 +117,6 @@ export default TabbedContent;
 
 const activeTabStyle = tw`mb-2 text-primary`;
 const inActiveTabStyle = tw`mb-2 text-gray-500 hover:text-black`;
-const rightNavStyle = tw`col-start-3 row-start-1`;
-const rightImageStyle = tw`col-start-1 row-start-1`;
-const rightContentStyle = tw`col-start-2 row-start-1`;
+const rightNavStyle = tw`lg:col-start-3 lg:row-start-1`;
+const rightImageStyle = tw`hidden lg:block lg:col-start-1 lg:row-start-1`;
+const rightContentStyle = tw`lg:col-start-2 lg:row-start-1`;
