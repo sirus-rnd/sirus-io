@@ -55,6 +55,9 @@ const FullArticle: React.FC<FullArticleProps> = props => {
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
+                  @media (max-width: 1080px) {
+                    -webkit-line-clamp: 4;
+                  }
                 `}
               >
                 {props.title}

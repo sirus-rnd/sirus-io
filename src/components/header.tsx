@@ -3,7 +3,6 @@ import 'twin.macro';
 import { Link } from 'gatsby';
 import { css } from '@emotion/react';
 import CaptionedLogo from '../components/captioned-logo';
-import { CSSTransition } from 'react-transition-group';
 
 interface HeaderProps {
   dark?: boolean;
@@ -89,7 +88,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 }
               }
               @media (max-width: 1024px) {
-                background: ${dark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)'};
+                background: ${dark ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.8)'};
                 position: absolute;
                 z-index: 9999;
                 width: 100%;

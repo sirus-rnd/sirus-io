@@ -84,6 +84,9 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
           fluid={author?.coverImageSharp?.childImageSharp?.fluid as FluidObject}
           css={css`
             height: 300px;
+            @media (max-width: 1024px) {
+              height: 240px;
+            }
           `}
         />
         <div
@@ -102,18 +105,22 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
             height: 100%;
           `}
         >
-          <div tw="container grid grid-cols-5 gap-12">
+          <div tw="container flex items-center justify-center">
             <div tw="col-span-3 col-start-2 flex items-center">
               <Img
-                tw="rounded-full"
+                tw="flex-shrink-0 rounded-full"
                 fluid={author?.profileImageSharp?.childImageSharp?.fluid as FluidObject}
                 css={css`
                   width: 200px;
                   height: 200px;
+                  @media (max-width: 1024px) {
+                    width: 100px;
+                    height: 100px;
+                  }
                 `}
               />
               <div tw="flex-1 pl-8">
-                <h1 tw="text-primary">{author?.name}</h1>
+                <h4 tw="text-xl mb-2 lg:mb-4 lg:text-5xl text-primary">{author?.name}</h4>
                 <p>{author?.bio ?? '-'}</p>
               </div>
             </div>
