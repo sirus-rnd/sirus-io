@@ -13,6 +13,8 @@ export interface Article {
   excerpt: string;
   slug: string;
   image?: FluidObject;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export interface ArticleAtribution {

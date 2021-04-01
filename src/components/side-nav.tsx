@@ -7,6 +7,8 @@ import { Separator } from './scaffolds';
 export interface SidenavProps {
   title: string;
   links: NavItem[];
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export interface NavItem {
@@ -30,7 +32,7 @@ const SubNav: React.FC<{ items: NavItem[] }> = props => {
 
 const Sidenav: React.FC<SidenavProps> = props => {
   return (
-    <div>
+    <div className={props.className} style={props.style}>
       <h3>{props.title}</h3>
       <Separator />
       <ul

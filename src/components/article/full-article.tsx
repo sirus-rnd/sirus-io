@@ -46,7 +46,19 @@ const FullArticle: React.FC<FullArticleProps> = props => {
           <div tw="container grid grid-cols-1 md:grid-cols-5">
             <div tw="md:col-span-3 md:col-start-2 px-8 md:px-0 my-12">
               <ArticleTags dark={true} tw="text-lg" tags={props.tags} />
-              <h1 tw="text-primary lg:text-7xl">{props.title}</h1>
+              <h1
+                tw="text-primary lg:text-7xl"
+                title={props.title}
+                css={css`
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;
+                `}
+              >
+                {props.title}
+              </h1>
               <ArticlePublishingInfo
                 dark={true}
                 tw="text-base"
