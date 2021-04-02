@@ -7,16 +7,6 @@ const typography = new Typography({
   scaleRatio: 2.75,
   headerFontFamily: ['Poppins'],
   headerWeight: 700,
-  googleFonts: [
-    {
-      name: 'Poppins',
-      styles: ['400', '700'],
-    },
-    {
-      name: 'Heebo',
-      styles: ['400', '400i', '700', '700i'],
-    },
-  ],
   bodyFontFamily: ['Heebo'],
   bodyWeight: 400,
   plugins: [new CodePlugin()],
