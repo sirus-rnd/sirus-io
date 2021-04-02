@@ -108,6 +108,7 @@ module.exports = {
     // SEO & marketing
     'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-react-helmet-async',
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
