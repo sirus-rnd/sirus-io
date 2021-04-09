@@ -99,6 +99,10 @@ const Page: React.FC<PageProps<GetPageQuery>> = ({ data, location }) => {
               <Img
                 fluid={pageData?.banner?.fluid as FluidObject}
                 alt={pageData?.banner?.alt as string}
+                css={css`
+                  height: 100%;
+                  width: 100%;
+                `}
               />
             ) : (
               <div tw="bg-gray-200"></div>

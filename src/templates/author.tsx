@@ -10,14 +10,6 @@ import { Separator } from '../components/scaffolds';
 import { GetAuthorQuery } from '../graphql-types';
 import Pagination, { PageContext } from '../components/article/pagination';
 
-const coverImageStyle = css`
-  background: grey;
-  height: 300px;
-  @media (max-width: 1024px) {
-    height: 240px;
-  }
-`;
-
 const profilePictureStyle = css`
   ${tw`flex-shrink-0 rounded-full`}
   background: grey;
@@ -104,13 +96,30 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
       <section
         css={css`
           position: relative;
+          overflow: hidden;
         `}
       >
-        {coverImage ? (
-          <Img fluid={coverImage} css={coverImageStyle} />
-        ) : (
-          <div css={coverImageStyle}></div>
-        )}
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+          `}
+        >
+          {coverImage ? (
+            <Img
+              fluid={coverImage}
+              css={css`
+                height: 100%;
+                width: 100%;
+              `}
+            />
+          ) : (
+            <div tw="bg-gray-200"></div>
+          )}
+        </div>
         <div
           tw="py-16 px-8 text-white"
           css={css`
@@ -121,7 +130,6 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
               rgba(0, 0, 0, 0.8) 50%,
               rgba(0, 0, 0, 0.4) 100%
             );
-            position: absolute;
             bottom: 0;
             width: 100%;
             height: 100%;

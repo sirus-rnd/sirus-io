@@ -27,7 +27,7 @@ const FeaturedArticle: React.FC<FeturedArticleProps> = props => {
         <div css={articleImageStyle}></div>
       )}
       <p>{props.excerpt}</p>
-      <div tw="grid grid-cols-2">
+      <div tw="grid grid-cols-1 lg:grid-cols-2">
         <ArticlePublishingInfo
           css={css`
             line-height: 1.4em;
@@ -35,7 +35,7 @@ const FeaturedArticle: React.FC<FeturedArticleProps> = props => {
           author={props.author}
           released={props.released}
         />
-        <div tw="text-right">
+        <div tw="lg:(text-right mt-0) mt-4">
           <PrimaryLink to={`/artikel/${props.slug}`}>baca lebih lanjut...</PrimaryLink>
         </div>
       </div>

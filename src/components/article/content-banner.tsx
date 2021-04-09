@@ -28,7 +28,17 @@ const ContentBanner: React.FC<ContentBannerProps> = props => {
           z-index: -1;
         `}
       >
-        {props.image ? <Img fluid={props.image as FluidObject} /> : <div tw="bg-gray-200"></div>}
+        {props.image ? (
+          <Img
+            fluid={props.image as FluidObject}
+            css={css`
+              height: 100%;
+              width: 100%;
+            `}
+          />
+        ) : (
+          <div tw="bg-gray-200"></div>
+        )}
       </div>
       <div
         tw="py-16 px-8 text-white flex items-center"

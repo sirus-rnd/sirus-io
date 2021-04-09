@@ -112,7 +112,7 @@ const Index: React.FC<PageProps<GetIndexPostQuery, PageContext>> = ({
       <ContentBanner {...banner} />
       <section tw="py-16 px-8">
         <div tw="container grid grid-cols-none md:grid-cols-3 gap-12">
-          <Sidenav tw="w-full" {...navs} />
+          <Sidenav tw="row-start-2 lg:row-start-1 w-full" {...navs} />
           <div tw="lg:col-span-2">
             {articles.map((article, idx, articles) => (
               <div>

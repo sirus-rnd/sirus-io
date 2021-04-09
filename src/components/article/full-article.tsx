@@ -28,12 +28,25 @@ const FullArticle: React.FC<FullArticleProps> = props => {
             z-index: -1;
           `}
         >
-          {props.image ? <Img fluid={props.image} /> : <div tw="bg-gray-200"></div>}
+          {props.image ? (
+            <Img
+              fluid={props.image}
+              css={css`
+                height: 100%;
+                width: 100%;
+              `}
+            />
+          ) : (
+            <div tw="bg-gray-200"></div>
+          )}
         </div>
         <div
           tw="flex items-end"
           css={css`
             padding-top: 212px;
+            @media (max-width: 1024px) {
+              padding-top: 150px;
+            }
             background: rgba(0, 0, 0, 0.5);
             background: linear-gradient(
               90deg,

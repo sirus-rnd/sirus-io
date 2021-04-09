@@ -28,7 +28,7 @@ const BulletArticle: React.FC<BulletArticleProps> = props => {
           <h1>{props.title}</h1>
         </Link>
         <p>{props.excerpt}...</p>
-        <div tw="grid grid-cols-2">
+        <div tw="grid grid-cols-1 lg:grid-cols-2">
           <ArticlePublishingInfo
             css={css`
               line-height: 1.4em;
@@ -36,7 +36,7 @@ const BulletArticle: React.FC<BulletArticleProps> = props => {
             author={props.author}
             released={props.released}
           />
-          <div tw="text-right">
+          <div tw="lg:(text-right mt-0) mt-4">
             <PrimaryLink to={`/artikel/${props.slug}`}>baca lebih lanjut...</PrimaryLink>
           </div>
         </div>
