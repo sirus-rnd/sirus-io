@@ -20,7 +20,11 @@ const Tag: React.FC<PageProps<GetTagQuery, PageContext>> = ({ data, pageContext,
     edge =>
       ({
         title: edge?.node?.title,
-        author: edge?.node?.authors[0],
+        author: {
+          name: edge?.node?.primary_author?.name,
+          slug: edge?.node?.primary_author?.slug,
+          image: edge?.node?.primary_author?.profileImageSharp?.childImageSharp?.fluid,
+        },
         excerpt: edge?.node?.excerpt,
         released: new Date(edge.node.published_at),
         tags: edge.node?.tags?.map(tag => ({

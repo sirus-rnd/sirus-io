@@ -16,20 +16,24 @@ const FullArticle: React.FC<FullArticleProps> = props => {
       <header
         css={css`
           position: relative;
+          overflow: hidden;
         `}
       >
-        <Img
-          fluid={props.image}
+        <div
           css={css`
-            height: 630px;
-            @media (max-width: 1080px) {
-              height: 530px;
-            }
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
           `}
-        />
+        >
+          {props.image ? <Img fluid={props.image} /> : <div tw="bg-gray-200"></div>}
+        </div>
         <div
           tw="flex items-end"
           css={css`
+            padding-top: 212px;
             background: rgba(0, 0, 0, 0.5);
             background: linear-gradient(
               90deg,
@@ -37,7 +41,6 @@ const FullArticle: React.FC<FullArticleProps> = props => {
               rgba(0, 0, 0, 0.8) 50%,
               rgba(0, 0, 0, 0.4) 100%
             );
-            position: absolute;
             bottom: 0;
             width: 100%;
             height: 100%;
@@ -46,20 +49,7 @@ const FullArticle: React.FC<FullArticleProps> = props => {
           <div tw="container grid grid-cols-1 md:grid-cols-5">
             <div tw="md:col-span-3 md:col-start-2 px-8 md:px-0 my-12">
               <ArticleTags dark={true} tw="text-lg" tags={props.tags} />
-              <h1
-                tw="text-primary lg:text-7xl"
-                title={props.title}
-                css={css`
-                  text-overflow: ellipsis;
-                  overflow: hidden;
-                  display: -webkit-box;
-                  -webkit-line-clamp: 3;
-                  -webkit-box-orient: vertical;
-                  @media (max-width: 1080px) {
-                    -webkit-line-clamp: 4;
-                  }
-                `}
-              >
+              <h1 tw="text-primary lg:text-7xl" title={props.title}>
                 {props.title}
               </h1>
               <ArticlePublishingInfo

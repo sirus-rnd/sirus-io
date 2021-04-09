@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 import { css } from '@emotion/react';
 import { DateTime } from 'luxon';
 import { Link } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
+import Img, { FluidObject } from 'gatsby-image';
 
 export interface Article {
   tags: ArticleAtribution[];
@@ -20,6 +20,7 @@ export interface Article {
 export interface ArticleAtribution {
   name: string;
   slug: string;
+  image?: FluidObject;
 }
 
 export const linkStyle = css`
@@ -58,6 +59,13 @@ export interface ArticlePublishingInfoProps {
   className?: string;
 }
 
+const profilePictureStyle = css`
+  ${tw`flex-none rounded-full mr-4`}
+  background: grey;
+  width: 40px;
+  height: 40px;
+`;
+
 export const ArticlePublishingInfo: React.FC<ArticlePublishingInfoProps> = ({
   released,
   author,
@@ -66,10 +74,18 @@ export const ArticlePublishingInfo: React.FC<ArticlePublishingInfoProps> = ({
   className,
 }) => {
   return (
-    <h5 className={className} style={style} css={[dark ? linkDarkStyle : linkStyle]}>
-      Dirilis {DateTime.fromJSDate(released).setLocale('id').toLocaleString(DateTime.DATE_HUGE)}{' '}
-      oleh <Link to={`/penulis/${author.slug}`}>{author.name}</Link>
-    </h5>
+    <div className={className} style={style} tw="flex items-center">
+      {author?.image ? (
+        <Img fluid={author?.image as FluidObject} css={profilePictureStyle} />
+      ) : (
+        <div css={profilePictureStyle}></div>
+      )}
+      <h5 tw="mb-0" css={[dark ? linkDarkStyle : linkStyle]}>
+        Dirilis {DateTime.fromJSDate(released).setLocale('id').toLocaleString(DateTime.DATE_HUGE)}
+        <br />
+        oleh <Link to={`/penulis/${author.slug}`}>{author.name}</Link>
+      </h5>
+    </div>
   );
 };
 
@@ -84,7 +100,7 @@ export const ArticleTags: React.FC<ArticleTagsProps> = ({ tags, dark, style, cla
   return (
     <h4 className={className} style={style} css={[dark ? linkDarkStyle : linkStyle]}>
       {tags.map(tag => (
-        <Link key={tag.slug} to={`/kategori/${tag.slug}`}>
+        <Link tw="mr-2" key={tag.slug} to={`/kategori/${tag.slug}`}>
           {tag.name}
         </Link>
       ))}

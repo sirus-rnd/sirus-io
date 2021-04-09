@@ -19,6 +19,10 @@ export interface JumbotronState {
   activeIdx: number;
 }
 
+const jumbotronImageStyle = css`
+  height: 100vh;
+`;
+
 class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
   timer!: NodeJS.Timer;
 
@@ -81,12 +85,11 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
               node.addEventListener('transitionend', done, false);
             }}
           >
-            <Img
-              fluid={activeItem.image as FluidObject}
-              css={css`
-                height: 100vh;
-              `}
-            />
+            {activeItem.image ? (
+              <Img fluid={activeItem.image as FluidObject} css={jumbotronImageStyle} />
+            ) : (
+              <div css={jumbotronImageStyle}></div>
+            )}
           </CSSTransition>
         </SwitchTransition>
         <div

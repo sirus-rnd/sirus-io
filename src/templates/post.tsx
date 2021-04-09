@@ -12,7 +12,11 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
   const post = data.ghostPost;
   const article: FullArticleProps = {
     title: post?.title as string,
-    author: post?.authors[0] as ArticleAtribution,
+    author: {
+      name: post?.primary_author?.name,
+      slug: post?.primary_author?.slug,
+      image: post?.primary_author?.profileImageSharp?.childImageSharp?.fluid,
+    },
     excerpt: post?.excerpt as string,
     released: new Date(post?.published_at),
     tags: post?.tags?.map(tag => ({
@@ -22,7 +26,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
     slug: post?.slug as string,
     image: post?.featureImageSharp?.childImageSharp?.fluid,
     content: post?.childHtmlRehype?.html,
-    toc: post?.childHtmlRehype?.tableOfContents
+    toc: post?.childHtmlRehype?.tableOfContents,
   };
 
   // SEO
@@ -32,7 +36,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
   const title = post.meta_title || post.title;
   const shareImage = post.feature_image || blogMeta.cover_image || siteMeta.image;
   const publisherLogo = `${siteMeta.url}/${siteMeta.logo}`;
-  const author = post.authors[0];
+  const author = post.primary_author;
   const description = post.meta_description || post.excerpt;
 
   const jsonLd = {
@@ -41,7 +45,7 @@ const Post: React.FC<PageProps<GetPostQuery, PageContext>> = ({ data, location }
     author: {
       '@type': `Person`,
       name: author.name,
-      image: author.profile_image,
+      image: `${siteMeta.url}${author.profileImageSharp?.childImageSharp?.fluid?.src}`,
     },
     keywords: post.tags.length ? post.tags.join(`, `) : undefined,
     headline: title,

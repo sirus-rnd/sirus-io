@@ -23,7 +23,11 @@ export interface HomeProps {
 
 function ghostEdgeToArticle(post: GhostPostFieldsFragment): Article {
   return {
-    author: { name: post.authors[0]?.name, slug: post.authors[0]?.slug },
+    author: {
+      name: post?.primary_author?.name,
+      slug: post?.primary_author?.slug,
+      image: post?.primary_author?.profileImageSharp?.childImageSharp?.fluid,
+    },
     tags: post.tags?.map(tag => ({ name: tag?.name, slug: tag?.slug })),
     excerpt: post.excerpt,
     released: new Date(post?.published_at),
@@ -191,7 +195,7 @@ export const query = graphql`
         }
       }
     }
-    allGhostPost(limit: 4, sort: { fields: published_at }) {
+    allGhostPost(limit: 4, sort: { fields: published_at, order: DESC }) {
       totalCount
       edges {
         node {

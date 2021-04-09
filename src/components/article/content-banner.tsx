@@ -15,16 +15,21 @@ const ContentBanner: React.FC<ContentBannerProps> = props => {
     <section
       css={css`
         position: relative;
+        overflow: hidden;
       `}
     >
-      <Img
+      <div
         tw="mb-6"
-        fluid={props.image as FluidObject}
         css={css`
+          position: absolute;
+          top: 0;
           width: 100%;
-          height: 400px;
+          height: 100%;
+          z-index: -1;
         `}
-      />
+      >
+        {props.image ? <Img fluid={props.image as FluidObject} /> : <div tw="bg-gray-200"></div>}
+      </div>
       <div
         tw="py-16 px-8 text-white flex items-center"
         css={css`
@@ -35,7 +40,6 @@ const ContentBanner: React.FC<ContentBannerProps> = props => {
             rgba(0, 0, 0, 0.8) 50%,
             rgba(0, 0, 0, 0.4) 100%
           );
-          position: absolute;
           bottom: 0;
           width: 100%;
           height: 100%;
@@ -45,7 +49,8 @@ const ContentBanner: React.FC<ContentBannerProps> = props => {
           <div>
             <h4 tw="text-white">{props.subheader}</h4>
             <h1
-              tw="text-primary text-6xl" css={css`
+              tw="text-primary text-6xl"
+              css={css`
                 max-height: 280px;
               `}
             >

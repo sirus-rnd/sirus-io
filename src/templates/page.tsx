@@ -83,15 +83,27 @@ const Page: React.FC<PageProps<GetPageQuery>> = ({ data, location }) => {
         <section
           css={css`
             position: relative;
+            overflow: hidden;
           `}
         >
-          <Img
-            fluid={pageData?.banner?.fluid as FluidObject}
-            alt={pageData?.banner?.alt as string}
+          <div
             css={css`
-              height: 300px;
+              position: absolute;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              z-index: -1;
             `}
-          />
+          >
+            {pageData?.banner?.fluid ? (
+              <Img
+                fluid={pageData?.banner?.fluid as FluidObject}
+                alt={pageData?.banner?.alt as string}
+              />
+            ) : (
+              <div tw="bg-gray-200"></div>
+            )}
+          </div>
           <div
             tw="flex items-center"
             css={css`
@@ -105,13 +117,12 @@ const Page: React.FC<PageProps<GetPageQuery>> = ({ data, location }) => {
                 rgba(0, 0, 0, 0.8) 90%,
                 rgba(0, 0, 0, 0.9) 100%
               );
-              position: absolute;
               bottom: 0;
               width: 100%;
               height: 100%;
             `}
           >
-            <div tw="container grid grid-cols-1 md:grid-cols-5">
+            <div tw="container grid grid-cols-1 md:grid-cols-5 my-12">
               <div tw="md:col-span-3 md:col-start-2 px-8 md:px-0">
                 <div tw="text-primary">
                   <RichText render={pageData?.title?.raw} />
@@ -123,7 +134,7 @@ const Page: React.FC<PageProps<GetPageQuery>> = ({ data, location }) => {
             </div>
           </div>
         </section>
-        <section tw="py-16 px-8">
+        <section tw="mt-16 px-8">
           <div tw="container grid grid-cols-1 md:grid-cols-5">
             <div tw="md:col-span-3 md:col-start-2">
               <RichText render={pageData?.content?.raw} />

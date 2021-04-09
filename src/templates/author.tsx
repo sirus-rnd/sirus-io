@@ -1,14 +1,33 @@
 import React from 'react';
-import 'twin.macro';
+import tw from 'twin.macro';
 import { Helmet } from 'react-helmet';
 import { graphql, PageProps } from 'gatsby';
 import BaseLayout from '../layouts/base';
 import { css } from '@emotion/react';
-import Img, { FluidObject } from 'gatsby-image';
+import Img from 'gatsby-image';
 import BulletArticle, { BulletArticleProps } from '../components/article/bullet-article';
 import { Separator } from '../components/scaffolds';
 import { GetAuthorQuery } from '../graphql-types';
 import Pagination, { PageContext } from '../components/article/pagination';
+
+const coverImageStyle = css`
+  background: grey;
+  height: 300px;
+  @media (max-width: 1024px) {
+    height: 240px;
+  }
+`;
+
+const profilePictureStyle = css`
+  ${tw`flex-shrink-0 rounded-full`}
+  background: grey;
+  width: 200px;
+  height: 200px;
+  @media (max-width: 1024px) {
+    width: 100px;
+    height: 100px;
+  }
+`;
 
 const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
   data,
@@ -19,7 +38,11 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
     edge =>
       ({
         title: edge?.node?.title,
-        author: edge?.node?.authors[0],
+        author: {
+          name: edge?.node?.primary_author?.name,
+          slug: edge?.node?.primary_author?.slug,
+          image: edge?.node?.primary_author?.profileImageSharp?.childImageSharp?.fluid,
+        },
         excerpt: edge?.node?.excerpt,
         released: new Date(edge.node.published_at),
         tags: edge.node?.tags?.map(tag => ({
@@ -56,6 +79,9 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
     },
   };
 
+  const coverImage = author?.coverImageSharp?.childImageSharp?.fluid;
+  const profilePicture = author?.profileImageSharp?.childImageSharp?.fluid;
+
   return (
     <BaseLayout>
       <Helmet>
@@ -80,15 +106,11 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
           position: relative;
         `}
       >
-        <Img
-          fluid={author?.coverImageSharp?.childImageSharp?.fluid as FluidObject}
-          css={css`
-            height: 300px;
-            @media (max-width: 1024px) {
-              height: 240px;
-            }
-          `}
-        />
+        {coverImage ? (
+          <Img fluid={coverImage} css={coverImageStyle} />
+        ) : (
+          <div css={coverImageStyle}></div>
+        )}
         <div
           tw="py-16 px-8 text-white"
           css={css`
@@ -107,18 +129,11 @@ const Author: React.FC<PageProps<GetAuthorQuery, PageContext>> = ({
         >
           <div tw="container flex items-center justify-center">
             <div tw="col-span-3 col-start-2 flex items-center">
-              <Img
-                tw="flex-shrink-0 rounded-full"
-                fluid={author?.profileImageSharp?.childImageSharp?.fluid as FluidObject}
-                css={css`
-                  width: 200px;
-                  height: 200px;
-                  @media (max-width: 1024px) {
-                    width: 100px;
-                    height: 100px;
-                  }
-                `}
-              />
+              {profilePicture ? (
+                <Img fluid={profilePicture} css={profilePictureStyle} />
+              ) : (
+                <div css={profilePictureStyle}></div>
+              )}
               <div tw="flex-1 pl-8">
                 <h4 tw="text-xl mb-2 lg:mb-4 lg:text-5xl text-primary">{author?.name}</h4>
                 <p>{author?.bio ?? '-'}</p>

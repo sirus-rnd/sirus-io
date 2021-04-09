@@ -1,5 +1,5 @@
 import React from 'react';
-import 'twin.macro';
+import tw from 'twin.macro';
 import { Link } from 'gatsby';
 import { css } from '@emotion/react';
 import { Article, ArticlePublishingInfo, ArticleTags, PrimaryLink } from './article';
@@ -7,31 +7,39 @@ import Img, { FluidObject } from 'gatsby-image';
 
 export type BulletArticleProps = Article;
 
+const articleImageStyle = css`
+  ${tw`hidden md:block md:flex-none rounded-full mr-8`}
+  background: grey;
+  width: 200px;
+  height: 200px;
+`;
+
 const BulletArticle: React.FC<BulletArticleProps> = props => {
   return (
     <article tw="flex">
-      <Img
-        tw="hidden md:block md:flex-none rounded-full mr-8"
-        fluid={props?.image as FluidObject}
-        css={css`
-          width: 200px;
-          height: 200px;
-        `}
-      />
+      {props.image ? (
+        <Img fluid={props?.image as FluidObject} css={articleImageStyle} />
+      ) : (
+        <div css={articleImageStyle}></div>
+      )}
       <div tw="flex-1">
-        <div tw="grid grid-cols-2 justify-between content-center mb-2">
-          <ArticleTags tw="mb-0" tags={props.tags} />
-          <ArticlePublishingInfo
-            tw="text-right mb-0"
-            author={props.author}
-            released={props.released}
-          />
-        </div>
+        <ArticleTags tw="mb-4" tags={props.tags} />
         <Link tw="text-primary no-underline" to={`/artikel/${props.slug}`}>
           <h1>{props.title}</h1>
         </Link>
         <p>{props.excerpt}...</p>
-        <PrimaryLink to={`/artikel/${props.slug}`}>lebih lanjut...</PrimaryLink>
+        <div tw="grid grid-cols-2">
+          <ArticlePublishingInfo
+            css={css`
+              line-height: 1.4em;
+            `}
+            author={props.author}
+            released={props.released}
+          />
+          <div tw="text-right">
+            <PrimaryLink to={`/artikel/${props.slug}`}>baca lebih lanjut...</PrimaryLink>
+          </div>
+        </div>
       </div>
     </article>
   );

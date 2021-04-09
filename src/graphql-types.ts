@@ -9894,14 +9894,36 @@ export type GhostPostFieldsFragment = { __typename?: 'GhostPost' } & Pick<
       Maybe<
         { __typename?: 'GhostAuthor' } & Pick<
           GhostAuthor,
-          'name' | 'slug' | 'bio' | 'profile_image' | 'twitter' | 'facebook' | 'website'
-        >
+          'name' | 'slug' | 'bio' | 'twitter' | 'facebook' | 'website'
+        > & {
+            profileImageSharp?: Maybe<
+              { __typename?: 'File' } & {
+                childImageSharp?: Maybe<
+                  { __typename?: 'ImageSharp' } & {
+                    fluid?: Maybe<
+                      { __typename?: 'ImageSharpFluid' } & ImageSharpFluidFieldsFragment
+                    >;
+                  }
+                >;
+              }
+            >;
+          }
       >
     >;
     primary_author: { __typename?: 'GhostAuthor' } & Pick<
       GhostAuthor,
-      'name' | 'slug' | 'bio' | 'profile_image' | 'twitter' | 'facebook' | 'website'
-    >;
+      'name' | 'slug' | 'bio' | 'twitter' | 'facebook' | 'website'
+    > & {
+        profileImageSharp?: Maybe<
+          { __typename?: 'File' } & {
+            childImageSharp?: Maybe<
+              { __typename?: 'ImageSharp' } & {
+                fluid?: Maybe<{ __typename?: 'ImageSharpFluid' } & ImageSharpFluidFieldsFragment>;
+              }
+            >;
+          }
+        >;
+      };
     primary_tag?: Maybe<
       { __typename?: 'GhostTag' } & Pick<
         GhostTag,

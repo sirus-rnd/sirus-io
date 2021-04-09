@@ -161,7 +161,13 @@ export const ghostPostFields = graphql`
       slug
       bio
       # email
-      profile_image
+      profileImageSharp {
+        childImageSharp {
+          fluid(maxWidth: 500, maxHeight: 500) {
+            ...ImageSharpFluidFields
+          }
+        }
+      }
       twitter
       facebook
       website
@@ -171,7 +177,13 @@ export const ghostPostFields = graphql`
       slug
       bio
       # email
-      profile_image
+      profileImageSharp {
+        childImageSharp {
+          fluid(maxWidth: 500, maxHeight: 500) {
+            ...ImageSharpFluidFields
+          }
+        }
+      }
       twitter
       facebook
       website
