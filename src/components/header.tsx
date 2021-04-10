@@ -1,5 +1,6 @@
 import React from 'react';
 import tw from 'twin.macro';
+import { CSSTransition } from 'react-transition-group';
 import { Link } from 'gatsby';
 import { css } from '@emotion/react';
 import CaptionedLogo from '../components/captioned-logo';
@@ -91,6 +92,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
               padding: 16px 24px;
               top: 0;
               background: ${dark ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.8)'};
+              backdrop-filter: blur(4px);
               @media (min-width: 1024px) {
                 display: none;
               }
@@ -144,6 +146,25 @@ class Header extends React.Component<HeaderProps, HeaderState> {
               </h2>
             </Link>
           </div>
+          <CSSTransition in={menuMobileActive} timeout={200} classNames="fade" unmountOnExit>
+            <div
+              onClick={() => {
+                this.setState({
+                  menuMobileActive: false,
+                });
+              }}
+              css={css`
+                background: ${dark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.6)'};
+                backdrop-filter: blur(2px);
+                position: fixed;
+                z-index: 9998;
+                width: 100%;
+                height: 100vh;
+                top: 0;
+                left: 0;
+              `}
+            ></div>
+          </CSSTransition>
           <nav
             tw="lg:flex lg:justify-center lg:items-center mb-8"
             css={css`
