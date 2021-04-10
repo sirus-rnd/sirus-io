@@ -59,7 +59,7 @@ const ContentBanner: React.FC<ContentBannerProps> = props => {
           <div>
             <h4 tw="text-white">{props.subheader}</h4>
             <h1
-              tw="text-primary text-6xl"
+              tw="text-primary text-5xl lg:text-7xl"
               css={css`
                 max-height: 280px;
               `}

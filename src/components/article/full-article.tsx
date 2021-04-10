@@ -17,6 +17,9 @@ const FullArticle: React.FC<FullArticleProps> = props => {
         css={css`
           position: relative;
           overflow: hidden;
+          @media (max-width: 1024px) {
+            top: -64px;
+          }
         `}
       >
         <div
@@ -45,7 +48,7 @@ const FullArticle: React.FC<FullArticleProps> = props => {
           css={css`
             padding-top: 212px;
             @media (max-width: 1024px) {
-              padding-top: 150px;
+              padding-top: 64px;
             }
             background: rgba(0, 0, 0, 0.5);
             background: linear-gradient(

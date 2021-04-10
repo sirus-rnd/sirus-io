@@ -75,6 +75,9 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
         css={css`
           background: #373737;
           position: relative;
+          @media (max-width: 1024px) {
+            top: -64px;
+          }
         `}
       >
         <SwitchTransition mode="out-in">
@@ -113,6 +116,9 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
             tw="container grid grid-cols-1 md:grid-cols-2 px-8"
             css={css`
               margin-top: 213px;
+              @media (max-width: 1024px) {
+                margin-top: 64px;
+              }
             `}
           >
             <div>

@@ -1,8 +1,9 @@
 import React from 'react';
-import 'twin.macro';
+import tw from 'twin.macro';
 import { Link } from 'gatsby';
 import { css } from '@emotion/react';
 import CaptionedLogo from '../components/captioned-logo';
+import { ReactComponent as Logo } from '../assets/sirus-logo.svg';
 
 interface HeaderProps {
   dark?: boolean;
@@ -26,7 +27,33 @@ const lightStyle = css`
   position: relative;
 `;
 
+const menuToggleDarkStyle = css`
+  font-size: 32px;
+  cursor: pointer;
+  height: 1em;
+  color: #999;
+  &:hover {
+    color: white;
+  }
+`;
+const menuToggleLightStyle = css`
+  font-size: 32px;
+  cursor: pointer;
+  height: 1em;
+  color: #777;
+  &:hover {
+    color: black;
+  }
+`;
+
 class Header extends React.Component<HeaderProps, HeaderState> {
+  constructor(props: HeaderProps) {
+    super(props);
+    this.setState({
+      menuMobileActive: false,
+    });
+  }
+
   render() {
     const dark = this.props?.dark;
     const menuMobileActive = this.state?.menuMobileActive;
@@ -48,28 +75,75 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             tw="flex my-6 lg:my-12 justify-center"
             css={css`
               top: 0;
+              @media (max-width: 1024px) {
+                display: none;
+              }
             `}
           >
             <CaptionedLogo color="#fe553a" />
           </div>
-          <h4
-            tw="lg:hidden text-center my-4 text-lg"
+          <div
             css={css`
-              color: ${dark ? 'white' : 'black'};
+              ${tw`flex items-center`}
+              position: fixed;
+              z-index: 9999;
+              width: 100%;
+              padding: 16px 24px;
+              top: 0;
+              background: ${dark ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.8)'};
+              @media (min-width: 1024px) {
+                display: none;
+              }
             `}
-            onClick={() => {
-              this.setState({
-                menuMobileActive: !this.state?.menuMobileActive,
-              });
-            }}
-            onMouseLeave={() => {
-              this.setState({
-                menuMobileActive: false,
-              });
-            }}
           >
-            Menu
-          </h4>
+            {menuMobileActive ? (
+              <div
+                className="icon icon-x"
+                tw="flex-none"
+                onClick={() => {
+                  this.setState({
+                    menuMobileActive: false,
+                  });
+                }}
+                css={dark ? menuToggleDarkStyle : menuToggleLightStyle}
+              ></div>
+            ) : (
+              <div
+                className="icon icon-menu"
+                tw="flex-none"
+                onClick={() => {
+                  this.setState({
+                    menuMobileActive: true,
+                  });
+                }}
+                css={dark ? menuToggleDarkStyle : menuToggleLightStyle}
+              ></div>
+            )}
+            <div tw="flex-grow"></div>
+            <Link to="/" tw="flex items-center no-underline">
+              <Logo
+                tw="flex-none"
+                width="32px"
+                height="29px"
+                css={css`
+                  fill: #fe553a;
+                `}
+              />
+              <h2
+                tw="text-primary"
+                css={css`
+                  font-weight: normal;
+                  font-size: 14px;
+                  margin: 0;
+                  margin-left: 8px;
+                `}
+              >
+                sirus
+                <br />
+                teknologi
+              </h2>
+            </Link>
+          </div>
           <nav
             tw="lg:flex lg:justify-center lg:items-center mb-8"
             css={css`
@@ -87,18 +161,24 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                   color: ${dark ? 'white' : 'black'};
                 }
               }
+              .close-menu {
+                display: none;
+              }
               @media (max-width: 1024px) {
                 background: ${dark ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.8)'};
-                position: absolute;
+                position: fixed;
                 z-index: 9999;
-                width: 100%;
-                padding: 16px 0;
-                opacity: ${menuMobileActive ? '1' : '0'};
-                transform: ${menuMobileActive ? 'translateY(0)' : 'translateY(-20px)'};
-                transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                width: 300px;
+                height: 100vh;
+                box-sizing: border-box;
+                left: ${menuMobileActive ? '0' : '-300px'};
+                transition: left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                top: 64px;
+                padding: 16px 8px;
                 a {
-                  padding: 6px 0;
+                  margin: 0;
+                  padding: 6px 16px;
+                  text-align: left;
                 }
               }
             `}
