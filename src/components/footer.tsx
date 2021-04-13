@@ -6,14 +6,20 @@ import { css } from '@emotion/react';
 import { DateTime } from 'luxon';
 import { RichText } from 'prismic-reactjs';
 import CaptionedLogo from '../components/captioned-logo';
-import { GetLayoutDataQuery } from '../graphql-types';
+import { GetFooterDataQuery } from '../graphql-types';
+import { linkToUrl } from './utils/menu';
 
 interface FooterProps {
-  data?: GetLayoutDataQuery;
+  data?: GetFooterDataQuery;
 }
 
 const FooterComp: React.FC<FooterProps> = ({ data }) => {
   const contactData = data.prismicContact.data;
+  const baseUrl = data.site?.siteMetadata?.url;
+  const menus = data.prismicMenu?.data?.menus?.map(m => ({
+    label: m.label,
+    url: linkToUrl(baseUrl, m.link),
+  }));
 
   return (
     <footer
@@ -41,17 +47,25 @@ const FooterComp: React.FC<FooterProps> = ({ data }) => {
               }
             `}
           >
-            <Link to="/ketentuan-privasi" activeClassName="active">
-              ketentuan privasi
-            </Link>
+            {menus.map((m, i) => (
+              <Link key={i} to={m.url} activeClassName="active">
+                {m.label}
+              </Link>
+            ))}
           </nav>
           <address tw="not-italic text-sm">
             &copy; 2019-{DateTime.local().year} PT Sirus Teknologi Utama <br />
             <RichText render={contactData?.address?.raw} />
             Nomor telepon:{' '}
-            <Obfuscate tw="text-gray-500 no-underline" tel={contactData?.phone_number as string} /> |
-            Email:{' '}
-            <Obfuscate tw="text-gray-500 no-underline" email={contactData?.contact_email as string} />
+            <Obfuscate
+              tw="text-gray-500 no-underline"
+              tel={contactData?.phone_number as string}
+            />{' '}
+            | Email:{' '}
+            <Obfuscate
+              tw="text-gray-500 no-underline"
+              email={contactData?.contact_email as string}
+            />
           </address>
         </div>
         <div>
@@ -64,12 +78,8 @@ const FooterComp: React.FC<FooterProps> = ({ data }) => {
   );
 };
 
-export interface BaseLayoutQueryProps {
-  dark?: boolean;
-}
-
 const pageQuery = graphql`
-  query getLayoutData {
+  query getFooterData {
     prismicContact {
       data {
         phone_number
@@ -83,10 +93,18 @@ const pageQuery = graphql`
         }
       }
     }
+    site {
+      siteMetadata {
+        ...SiteMetadataFields
+      }
+    }
+    prismicMenu(uid: { eq: "footer" }) {
+      ...PrismicMenuField
+    }
   }
 `;
 
-const Footer: React.FC<BaseLayoutQueryProps> = () => {
+const Footer: React.FC = () => {
   return <StaticQuery query={pageQuery} render={data => <FooterComp data={data} />} />;
 };
 

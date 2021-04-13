@@ -1,13 +1,20 @@
 import React from 'react';
 import tw from 'twin.macro';
 import { CSSTransition } from 'react-transition-group';
-import { Link } from 'gatsby';
+import { graphql, Link, StaticQuery } from 'gatsby';
 import { css } from '@emotion/react';
 import CaptionedLogo from '../components/captioned-logo';
 import { ReactComponent as Logo } from '../assets/sirus-logo.svg';
+import { GetHeaderDataQuery } from '../graphql-types';
+import { linkToUrl } from './utils/menu';
 
 interface HeaderProps {
   dark?: boolean;
+}
+
+interface HeaderCompProps {
+  dark?: boolean;
+  data?: GetHeaderDataQuery;
 }
 
 interface HeaderState {
@@ -47,7 +54,7 @@ const menuToggleLightStyle = css`
   }
 `;
 
-class Header extends React.Component<HeaderProps, HeaderState> {
+class HeaderComp extends React.Component<HeaderCompProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
     this.setState({
@@ -57,6 +64,11 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
   render() {
     const dark = this.props?.dark;
+    const baseUrl = this.props?.data?.site?.siteMetadata?.url;
+    const menus = this.props?.data?.prismicMenu?.data?.menus?.map(m => ({
+      label: m.label,
+      url: linkToUrl(baseUrl, m.link),
+    }));
     const menuMobileActive = this.state?.menuMobileActive;
     return (
       <header
@@ -204,23 +216,38 @@ class Header extends React.Component<HeaderProps, HeaderState> {
               }
             `}
           >
-            <Link to="/tentang-kami" activeClassName="active">
-              tentang kami
-            </Link>
-            <Link to="/produk-kami" activeClassName="active">
-              produk
-            </Link>
-            <Link to="/layanan-kami" activeClassName="active">
-              layanan
-            </Link>
-            <Link to="/artikel" activeClassName="active">
-              artikel
-            </Link>
+            {menus.map((m, i) => (
+              <Link key={i} to={m.url} activeClassName="active">
+                {m.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </header>
     );
   }
 }
+
+const headerQuery = graphql`
+  query getHeaderData {
+    site {
+      siteMetadata {
+        ...SiteMetadataFields
+      }
+    }
+    prismicMenu(uid: { eq: "header" }) {
+      ...PrismicMenuField
+    }
+  }
+`;
+
+const Header: React.FC<HeaderProps> = props => {
+  return (
+    <StaticQuery
+      query={headerQuery}
+      render={data => <HeaderComp dark={props.dark} data={data} />}
+    />
+  );
+};
 
 export default Header;

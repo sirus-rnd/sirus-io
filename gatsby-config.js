@@ -102,6 +102,7 @@ module.exports = {
           contact: require('./src/utils/prismic-schemas/contact.json'),
           page: require('./src/utils/prismic-schemas/page.json'),
           product: require('./src/utils/prismic-schemas/product.json'),
+          menu: require('./src/utils/prismic-schemas/menu.json'),
         },
       },
     },

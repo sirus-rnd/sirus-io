@@ -27,11 +27,13 @@ class BaseLayout extends React.Component<BaseProps> {
           <link href="/styles/fonts.css" rel="stylesheet" />
         </Helmet>
         <Header dark={dark} />
-        <div css={css`
-          @media (max-width: 1024px) {
-            margin-top: 64px;
-          }
-        `}>
+        <div
+          css={css`
+            @media (max-width: 1024px) {
+              margin-top: 64px;
+            }
+          `}
+        >
           {children}
         </div>
         <Footer />

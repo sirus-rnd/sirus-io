@@ -195,7 +195,7 @@ export const query = graphql`
         }
       }
     }
-    allGhostPost(limit: 4, sort: { fields: published_at, order: DESC }) {
+    allGhostPost(limit: 3, sort: { fields: published_at, order: DESC }) {
       totalCount
       edges {
         node {

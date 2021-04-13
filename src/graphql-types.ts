@@ -1078,11 +1078,60 @@ export type PrismicProductLast_Publication_DateArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+export type PrismicMenuMenusGroupType = {
+  __typename?: 'PrismicMenuMenusGroupType';
+  label?: Maybe<Scalars['String']>;
+  link?: Maybe<PrismicLinkType>;
+};
+
+export type PrismicMenuDataType = {
+  __typename?: 'PrismicMenuDataType';
+  menus?: Maybe<Array<Maybe<PrismicMenuMenusGroupType>>>;
+};
+
+export type PrismicMenu = PrismicDocument &
+  Node & {
+    __typename?: 'PrismicMenu';
+    data?: Maybe<PrismicMenuDataType>;
+    dataRaw: Scalars['JSON'];
+    dataString: Scalars['String'];
+    first_publication_date: Scalars['Date'];
+    href: Scalars['String'];
+    url?: Maybe<Scalars['String']>;
+    lang: Scalars['String'];
+    last_publication_date: Scalars['Date'];
+    tags: Array<Scalars['String']>;
+    alternate_languages: Array<PrismicLinkType>;
+    type: Scalars['String'];
+    prismicId: Scalars['ID'];
+    _previewable: Scalars['ID'];
+    uid?: Maybe<Scalars['String']>;
+    id: Scalars['ID'];
+    parent?: Maybe<Node>;
+    children: Array<Node>;
+    internal: Internal;
+  };
+
+export type PrismicMenuFirst_Publication_DateArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type PrismicMenuLast_Publication_DateArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
 export type PrismicAllDocumentTypes =
   | PrismicHomepage
   | PrismicContact
   | PrismicPage
-  | PrismicProduct;
+  | PrismicProduct
+  | PrismicMenu;
 
 export type PrismicImageFixedType = {
   __typename?: 'PrismicImageFixedType';
@@ -1846,6 +1895,7 @@ export type SitePluginPluginOptionsSchemas = {
   contact?: Maybe<SitePluginPluginOptionsSchemasContact>;
   page?: Maybe<SitePluginPluginOptionsSchemasPage>;
   product?: Maybe<SitePluginPluginOptionsSchemasProduct>;
+  menu?: Maybe<SitePluginPluginOptionsSchemasMenu>;
 };
 
 export type SitePluginPluginOptionsSchemasHomepage = {
@@ -2345,6 +2395,72 @@ export type SitePluginPluginOptionsSchemasProductMainFeaturesConfigFieldsLinkCon
   placeholder?: Maybe<Scalars['String']>;
 };
 
+export type SitePluginPluginOptionsSchemasMenu = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenu';
+  Main?: Maybe<SitePluginPluginOptionsSchemasMenuMain>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMain = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMain';
+  uid?: Maybe<SitePluginPluginOptionsSchemasMenuMainUid>;
+  menus?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenus>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainUid = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainUid';
+  type?: Maybe<Scalars['String']>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainUidConfig>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainUidConfig = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainUidConfig';
+  label?: Maybe<Scalars['String']>;
+  placeholder?: Maybe<Scalars['String']>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenus = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenus';
+  type?: Maybe<Scalars['String']>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfig>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfig = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfig';
+  fields?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFields>;
+  label?: Maybe<Scalars['String']>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFields = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfigFields';
+  label?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabel>;
+  link?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLink>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabel = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabel';
+  type?: Maybe<Scalars['String']>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelConfig>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelConfig = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelConfig';
+  label?: Maybe<Scalars['String']>;
+  placeholder?: Maybe<Scalars['String']>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLink = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLink';
+  type?: Maybe<Scalars['String']>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkConfig>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkConfig = {
+  __typename?: 'SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkConfig';
+  allowTargetBlank?: Maybe<Scalars['Boolean']>;
+  label?: Maybe<Scalars['String']>;
+  placeholder?: Maybe<Scalars['String']>;
+};
+
 export type SitePluginPackageJson = {
   __typename?: 'SitePluginPackageJson';
   name?: Maybe<Scalars['String']>;
@@ -2410,6 +2526,8 @@ export type Query = {
   allPrismicPage: PrismicPageConnection;
   prismicProduct?: Maybe<PrismicProduct>;
   allPrismicProduct: PrismicProductConnection;
+  prismicMenu?: Maybe<PrismicMenu>;
+  allPrismicMenu: PrismicMenuConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2928,6 +3046,34 @@ export type QueryPrismicProductArgs = {
 export type QueryAllPrismicProductArgs = {
   filter?: Maybe<PrismicProductFilterInput>;
   sort?: Maybe<PrismicProductSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+export type QueryPrismicMenuArgs = {
+  data?: Maybe<PrismicMenuDataTypeFilterInput>;
+  dataRaw?: Maybe<JsonQueryOperatorInput>;
+  dataString?: Maybe<StringQueryOperatorInput>;
+  first_publication_date?: Maybe<DateQueryOperatorInput>;
+  href?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  lang?: Maybe<StringQueryOperatorInput>;
+  last_publication_date?: Maybe<DateQueryOperatorInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
+  alternate_languages?: Maybe<PrismicLinkTypeFilterListInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  prismicId?: Maybe<IdQueryOperatorInput>;
+  _previewable?: Maybe<IdQueryOperatorInput>;
+  uid?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+export type QueryAllPrismicMenuArgs = {
+  filter?: Maybe<PrismicMenuFilterInput>;
+  sort?: Maybe<PrismicMenuSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -8532,6 +8678,210 @@ export type PrismicProductSortInput = {
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
+export type PrismicMenuDataTypeFilterInput = {
+  menus?: Maybe<PrismicMenuMenusGroupTypeFilterListInput>;
+};
+
+export type PrismicMenuMenusGroupTypeFilterListInput = {
+  elemMatch?: Maybe<PrismicMenuMenusGroupTypeFilterInput>;
+};
+
+export type PrismicMenuMenusGroupTypeFilterInput = {
+  label?: Maybe<StringQueryOperatorInput>;
+  link?: Maybe<PrismicLinkTypeFilterInput>;
+};
+
+export type PrismicMenuConnection = {
+  __typename?: 'PrismicMenuConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<PrismicMenuEdge>;
+  nodes: Array<PrismicMenu>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  group: Array<PrismicMenuGroupConnection>;
+};
+
+export type PrismicMenuConnectionDistinctArgs = {
+  field: PrismicMenuFieldsEnum;
+};
+
+export type PrismicMenuConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: PrismicMenuFieldsEnum;
+};
+
+export type PrismicMenuEdge = {
+  __typename?: 'PrismicMenuEdge';
+  next?: Maybe<PrismicMenu>;
+  node: PrismicMenu;
+  previous?: Maybe<PrismicMenu>;
+};
+
+export enum PrismicMenuFieldsEnum {
+  DataMenus = 'data___menus',
+  DataMenusLabel = 'data___menus___label',
+  DataMenusLinkLinkType = 'data___menus___link___link_type',
+  DataMenusLinkIsBroken = 'data___menus___link___isBroken',
+  DataMenusLinkUrl = 'data___menus___link___url',
+  DataMenusLinkTarget = 'data___menus___link___target',
+  DataMenusLinkSize = 'data___menus___link___size',
+  DataMenusLinkId = 'data___menus___link___id',
+  DataMenusLinkType = 'data___menus___link___type',
+  DataMenusLinkTags = 'data___menus___link___tags',
+  DataMenusLinkLang = 'data___menus___link___lang',
+  DataMenusLinkSlug = 'data___menus___link___slug',
+  DataMenusLinkUid = 'data___menus___link___uid',
+  DataMenusLinkRaw = 'data___menus___link___raw',
+  DataRaw = 'dataRaw',
+  DataString = 'dataString',
+  FirstPublicationDate = 'first_publication_date',
+  Href = 'href',
+  Url = 'url',
+  Lang = 'lang',
+  LastPublicationDate = 'last_publication_date',
+  Tags = 'tags',
+  AlternateLanguages = 'alternate_languages',
+  AlternateLanguagesLinkType = 'alternate_languages___link_type',
+  AlternateLanguagesIsBroken = 'alternate_languages___isBroken',
+  AlternateLanguagesUrl = 'alternate_languages___url',
+  AlternateLanguagesTarget = 'alternate_languages___target',
+  AlternateLanguagesSize = 'alternate_languages___size',
+  AlternateLanguagesId = 'alternate_languages___id',
+  AlternateLanguagesType = 'alternate_languages___type',
+  AlternateLanguagesTags = 'alternate_languages___tags',
+  AlternateLanguagesLang = 'alternate_languages___lang',
+  AlternateLanguagesSlug = 'alternate_languages___slug',
+  AlternateLanguagesUid = 'alternate_languages___uid',
+  AlternateLanguagesRaw = 'alternate_languages___raw',
+  Type = 'type',
+  PrismicId = 'prismicId',
+  Previewable = '_previewable',
+  Uid = 'uid',
+  Id = 'id',
+  ParentId = 'parent___id',
+  ParentParentId = 'parent___parent___id',
+  ParentParentParentId = 'parent___parent___parent___id',
+  ParentParentParentChildren = 'parent___parent___parent___children',
+  ParentParentChildren = 'parent___parent___children',
+  ParentParentChildrenId = 'parent___parent___children___id',
+  ParentParentChildrenChildren = 'parent___parent___children___children',
+  ParentParentInternalContent = 'parent___parent___internal___content',
+  ParentParentInternalContentDigest = 'parent___parent___internal___contentDigest',
+  ParentParentInternalDescription = 'parent___parent___internal___description',
+  ParentParentInternalFieldOwners = 'parent___parent___internal___fieldOwners',
+  ParentParentInternalIgnoreType = 'parent___parent___internal___ignoreType',
+  ParentParentInternalMediaType = 'parent___parent___internal___mediaType',
+  ParentParentInternalOwner = 'parent___parent___internal___owner',
+  ParentParentInternalType = 'parent___parent___internal___type',
+  ParentChildren = 'parent___children',
+  ParentChildrenId = 'parent___children___id',
+  ParentChildrenParentId = 'parent___children___parent___id',
+  ParentChildrenParentChildren = 'parent___children___parent___children',
+  ParentChildrenChildren = 'parent___children___children',
+  ParentChildrenChildrenId = 'parent___children___children___id',
+  ParentChildrenChildrenChildren = 'parent___children___children___children',
+  ParentChildrenInternalContent = 'parent___children___internal___content',
+  ParentChildrenInternalContentDigest = 'parent___children___internal___contentDigest',
+  ParentChildrenInternalDescription = 'parent___children___internal___description',
+  ParentChildrenInternalFieldOwners = 'parent___children___internal___fieldOwners',
+  ParentChildrenInternalIgnoreType = 'parent___children___internal___ignoreType',
+  ParentChildrenInternalMediaType = 'parent___children___internal___mediaType',
+  ParentChildrenInternalOwner = 'parent___children___internal___owner',
+  ParentChildrenInternalType = 'parent___children___internal___type',
+  ParentInternalContent = 'parent___internal___content',
+  ParentInternalContentDigest = 'parent___internal___contentDigest',
+  ParentInternalDescription = 'parent___internal___description',
+  ParentInternalFieldOwners = 'parent___internal___fieldOwners',
+  ParentInternalIgnoreType = 'parent___internal___ignoreType',
+  ParentInternalMediaType = 'parent___internal___mediaType',
+  ParentInternalOwner = 'parent___internal___owner',
+  ParentInternalType = 'parent___internal___type',
+  Children = 'children',
+  ChildrenId = 'children___id',
+  ChildrenParentId = 'children___parent___id',
+  ChildrenParentParentId = 'children___parent___parent___id',
+  ChildrenParentParentChildren = 'children___parent___parent___children',
+  ChildrenParentChildren = 'children___parent___children',
+  ChildrenParentChildrenId = 'children___parent___children___id',
+  ChildrenParentChildrenChildren = 'children___parent___children___children',
+  ChildrenParentInternalContent = 'children___parent___internal___content',
+  ChildrenParentInternalContentDigest = 'children___parent___internal___contentDigest',
+  ChildrenParentInternalDescription = 'children___parent___internal___description',
+  ChildrenParentInternalFieldOwners = 'children___parent___internal___fieldOwners',
+  ChildrenParentInternalIgnoreType = 'children___parent___internal___ignoreType',
+  ChildrenParentInternalMediaType = 'children___parent___internal___mediaType',
+  ChildrenParentInternalOwner = 'children___parent___internal___owner',
+  ChildrenParentInternalType = 'children___parent___internal___type',
+  ChildrenChildren = 'children___children',
+  ChildrenChildrenId = 'children___children___id',
+  ChildrenChildrenParentId = 'children___children___parent___id',
+  ChildrenChildrenParentChildren = 'children___children___parent___children',
+  ChildrenChildrenChildren = 'children___children___children',
+  ChildrenChildrenChildrenId = 'children___children___children___id',
+  ChildrenChildrenChildrenChildren = 'children___children___children___children',
+  ChildrenChildrenInternalContent = 'children___children___internal___content',
+  ChildrenChildrenInternalContentDigest = 'children___children___internal___contentDigest',
+  ChildrenChildrenInternalDescription = 'children___children___internal___description',
+  ChildrenChildrenInternalFieldOwners = 'children___children___internal___fieldOwners',
+  ChildrenChildrenInternalIgnoreType = 'children___children___internal___ignoreType',
+  ChildrenChildrenInternalMediaType = 'children___children___internal___mediaType',
+  ChildrenChildrenInternalOwner = 'children___children___internal___owner',
+  ChildrenChildrenInternalType = 'children___children___internal___type',
+  ChildrenInternalContent = 'children___internal___content',
+  ChildrenInternalContentDigest = 'children___internal___contentDigest',
+  ChildrenInternalDescription = 'children___internal___description',
+  ChildrenInternalFieldOwners = 'children___internal___fieldOwners',
+  ChildrenInternalIgnoreType = 'children___internal___ignoreType',
+  ChildrenInternalMediaType = 'children___internal___mediaType',
+  ChildrenInternalOwner = 'children___internal___owner',
+  ChildrenInternalType = 'children___internal___type',
+  InternalContent = 'internal___content',
+  InternalContentDigest = 'internal___contentDigest',
+  InternalDescription = 'internal___description',
+  InternalFieldOwners = 'internal___fieldOwners',
+  InternalIgnoreType = 'internal___ignoreType',
+  InternalMediaType = 'internal___mediaType',
+  InternalOwner = 'internal___owner',
+  InternalType = 'internal___type',
+}
+
+export type PrismicMenuGroupConnection = {
+  __typename?: 'PrismicMenuGroupConnection';
+  totalCount: Scalars['Int'];
+  edges: Array<PrismicMenuEdge>;
+  nodes: Array<PrismicMenu>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type PrismicMenuFilterInput = {
+  data?: Maybe<PrismicMenuDataTypeFilterInput>;
+  dataRaw?: Maybe<JsonQueryOperatorInput>;
+  dataString?: Maybe<StringQueryOperatorInput>;
+  first_publication_date?: Maybe<DateQueryOperatorInput>;
+  href?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  lang?: Maybe<StringQueryOperatorInput>;
+  last_publication_date?: Maybe<DateQueryOperatorInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
+  alternate_languages?: Maybe<PrismicLinkTypeFilterListInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  prismicId?: Maybe<IdQueryOperatorInput>;
+  _previewable?: Maybe<IdQueryOperatorInput>;
+  uid?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+export type PrismicMenuSortInput = {
+  fields?: Maybe<Array<Maybe<PrismicMenuFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
 export type SiteBuildMetadataConnection = {
   __typename?: 'SiteBuildMetadataConnection';
   totalCount: Scalars['Int'];
@@ -8732,6 +9082,7 @@ export type SitePluginPluginOptionsSchemasFilterInput = {
   contact?: Maybe<SitePluginPluginOptionsSchemasContactFilterInput>;
   page?: Maybe<SitePluginPluginOptionsSchemasPageFilterInput>;
   product?: Maybe<SitePluginPluginOptionsSchemasProductFilterInput>;
+  menu?: Maybe<SitePluginPluginOptionsSchemasMenuFilterInput>;
 };
 
 export type SitePluginPluginOptionsSchemasHomepageFilterInput = {
@@ -9153,6 +9504,61 @@ export type SitePluginPluginOptionsSchemasProductMainFeaturesConfigFieldsLinkCon
   placeholder?: Maybe<StringQueryOperatorInput>;
 };
 
+export type SitePluginPluginOptionsSchemasMenuFilterInput = {
+  Main?: Maybe<SitePluginPluginOptionsSchemasMenuMainFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainFilterInput = {
+  uid?: Maybe<SitePluginPluginOptionsSchemasMenuMainUidFilterInput>;
+  menus?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainUidFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainUidConfigFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainUidConfigFilterInput = {
+  label?: Maybe<StringQueryOperatorInput>;
+  placeholder?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFilterInput = {
+  fields?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsFilterInput>;
+  label?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsFilterInput = {
+  label?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelFilterInput>;
+  link?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelConfigFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLabelConfigFilterInput = {
+  label?: Maybe<StringQueryOperatorInput>;
+  placeholder?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkFilterInput = {
+  type?: Maybe<StringQueryOperatorInput>;
+  config?: Maybe<SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkConfigFilterInput>;
+};
+
+export type SitePluginPluginOptionsSchemasMenuMainMenusConfigFieldsLinkConfigFilterInput = {
+  allowTargetBlank?: Maybe<BooleanQueryOperatorInput>;
+  label?: Maybe<StringQueryOperatorInput>;
+  placeholder?: Maybe<StringQueryOperatorInput>;
+};
+
 export type SitePluginPackageJsonFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
@@ -9398,9 +9804,9 @@ export type SitePluginSortInput = {
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
-export type GetLayoutDataQueryVariables = Exact<{ [key: string]: never }>;
+export type GetFooterDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLayoutDataQuery = { __typename?: 'Query' } & {
+export type GetFooterDataQuery = { __typename?: 'Query' } & {
   prismicContact?: Maybe<
     { __typename?: 'PrismicContact' } & {
       data?: Maybe<
@@ -9421,6 +9827,23 @@ export type GetLayoutDataQuery = { __typename?: 'Query' } & {
       >;
     }
   >;
+  site?: Maybe<
+    { __typename?: 'Site' } & {
+      siteMetadata?: Maybe<{ __typename?: 'SiteSiteMetadata' } & SiteMetadataFieldsFragment>;
+    }
+  >;
+  prismicMenu?: Maybe<{ __typename?: 'PrismicMenu' } & PrismicMenuFieldFragment>;
+};
+
+export type GetHeaderDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetHeaderDataQuery = { __typename?: 'Query' } & {
+  site?: Maybe<
+    { __typename?: 'Site' } & {
+      siteMetadata?: Maybe<{ __typename?: 'SiteSiteMetadata' } & SiteMetadataFieldsFragment>;
+    }
+  >;
+  prismicMenu?: Maybe<{ __typename?: 'PrismicMenu' } & PrismicMenuFieldFragment>;
 };
 
 export type GetHomepageDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -9790,6 +10213,30 @@ export type ImageSharpFluidFieldsFragment = { __typename?: 'ImageSharpFluid' } &
   ImageSharpFluid,
   'base64' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes' | 'aspectRatio'
 >;
+
+export type PrismicMenuFieldFragment = { __typename?: 'PrismicMenu' } & Pick<PrismicMenu, 'uid'> & {
+    data?: Maybe<
+      { __typename?: 'PrismicMenuDataType' } & {
+        menus?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: 'PrismicMenuMenusGroupType' } & Pick<
+                PrismicMenuMenusGroupType,
+                'label'
+              > & {
+                  link?: Maybe<
+                    { __typename?: 'PrismicLinkType' } & Pick<
+                      PrismicLinkType,
+                      'url' | 'link_type' | 'type' | 'uid'
+                    >
+                  >;
+                }
+            >
+          >
+        >;
+      }
+    >;
+  };
 
 export type GhostTagFieldsFragment = { __typename?: 'GhostTag' } & Pick<
   GhostTag,

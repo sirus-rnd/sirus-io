@@ -66,6 +66,23 @@ export const gatsbyImageFluidField = graphql`
   }
 `;
 
+export const prismicMenuField = graphql`
+  fragment PrismicMenuField on PrismicMenu {
+    uid
+    data {
+      menus {
+        label
+        link {
+          url
+          link_type
+          type
+          uid
+        }
+      }
+    }
+  }
+`;
+
 // Used for tag archive pages
 export const ghostTagFields = graphql`
   fragment GhostTagFields on GhostTag {
