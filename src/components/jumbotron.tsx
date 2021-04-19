@@ -130,7 +130,7 @@ class Jumbotron extends React.Component<JumbotronProps, JumbotronState> {
                     node.addEventListener('transitionend', done, false);
                   }}
                 >
-                  <h1 tw="text-5xl lg:text-7xl text-primary">{activeItem?.title}</h1>
+                  <h1 tw="text-5xl lg:text-6xl text-primary">{activeItem?.title}</h1>
                 </CSSTransition>
               </SwitchTransition>
               <SwitchTransition mode="out-in">
