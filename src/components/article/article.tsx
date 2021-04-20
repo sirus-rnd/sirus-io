@@ -100,8 +100,8 @@ export const ArticleTags: React.FC<ArticleTagsProps> = ({ tags, dark, style, cla
   return (
     <h4 className={className} style={style} css={[dark ? linkDarkStyle : linkStyle]}>
       {tags.map(tag => (
-        <Link tw="mr-2" key={tag.slug} to={`/kategori/${tag.slug}`}>
-          {tag.name}
+        <Link key={tag.slug} to={`/kategori/${tag.slug}`}>
+          {tag.name + ' '}
         </Link>
       ))}
     </h4>
