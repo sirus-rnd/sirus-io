@@ -1,7 +1,7 @@
 import React from 'react';
 import 'twin.macro';
 import { Helmet } from 'react-helmet';
-import { graphql, PageProps } from 'gatsby';
+import { graphql, PageProps, navigate } from 'gatsby';
 import BaseLayout from '../layouts/base';
 import ContentBanner, { ContentBannerProps } from '../components/article/content-banner';
 import Sidenav, { SidenavProps, NavItem } from '../components/side-nav';
@@ -9,6 +9,7 @@ import BulletArticle, { BulletArticleProps } from '../components/article/bullet-
 import { Separator } from '../components/scaffolds';
 import { GetIndexPostQuery } from '../graphql-types';
 import Pagination, { PageContext } from '../components/article/pagination';
+import SearchForm from '../components/article/search-form';
 
 const Index: React.FC<PageProps<GetIndexPostQuery, PageContext>> = ({
   data,
@@ -112,7 +113,10 @@ const Index: React.FC<PageProps<GetIndexPostQuery, PageContext>> = ({
       <ContentBanner {...banner} />
       <section tw="py-16 px-8">
         <div tw="container grid grid-cols-none md:grid-cols-3 gap-12">
-          <Sidenav tw="row-start-2 lg:row-start-1 w-full" {...navs} />
+          <div tw="row-start-2 lg:row-start-1 w-full">
+            <SearchForm tw="mb-16" onSubmit={(query: string) => navigate(`/search/?query=${query ?? ''}`)} />
+            <Sidenav {...navs} />
+          </div>
           <div tw="lg:col-span-2">
             {articles.map((article, idx, articles) => (
               <div>

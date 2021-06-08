@@ -1,12 +1,12 @@
-import React, { FormEvent, ChangeEvent } from 'react';
+import React from 'react';
 import 'twin.macro';
 import { PageProps, navigate } from 'gatsby';
 import queryString from 'query-string';
 import BaseLayout from '../layouts/base';
 import SearchResult from '../components/article/search-result';
+import SearchForm from '../components/article/search-form';
 
 interface SearchState {
-  formQuery: string;
   query?: string;
   page?: number;
 }
@@ -14,7 +14,7 @@ interface SearchState {
 class Search extends React.Component<PageProps, SearchState> {
   constructor(props: PageProps) {
     super(props);
-    this.state = { formQuery: '', query: '', page: 1 };
+    this.state = { query: '', page: 1 };
   }
 
   componentDidMount() {
@@ -26,7 +26,6 @@ class Search extends React.Component<PageProps, SearchState> {
     const query = (params['query'] as string) ?? '';
     const page = parseInt((params['page'] as string) ?? '1', 10);
     this.setState({
-      formQuery: query,
       query,
       page,
     });
@@ -38,36 +37,23 @@ class Search extends React.Component<PageProps, SearchState> {
     }
   }
 
-  handleSearch(event: FormEvent) {
-    event.preventDefault();
-    navigate(`/search/?query=${this.state?.formQuery ?? ''}`);
-  }
-
-  handleQueryChange(event: ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      formQuery: event.target?.value,
-    });
+  handleSearch(query: string) {
+    navigate(`/search/?query=${query ?? ''}`);
   }
 
   render() {
-    // get query from url
-
     return (
       <BaseLayout>
         <section tw="py-16 px-8">
-          <div tw="container grid grid-cols-none md:grid-cols-3 gap-12">
-            <div>
-              <form onSubmit={e => this.handleSearch(e)}>
-                <input
-                  type="search"
-                  name="query"
-                  value={this.state?.formQuery}
-                  onChange={e => this.handleQueryChange(e)}
-                />
-                <button type="submit">search</button>
-              </form>
+          <div tw="container grid grid-cols-none lg:grid-cols-3 gap-12">
+            <div tw="w-full">
+              <SearchForm query={this.state?.query} onSubmit={(query) => this.handleSearch(query)} />
             </div>
-            <SearchResult query={this.state?.query} page={this.state?.page}></SearchResult>
+            <SearchResult
+              tw="lg:col-span-2"
+              query={this.state?.query}
+              page={this.state?.page}
+            ></SearchResult>
           </div>
         </section>
       </BaseLayout>

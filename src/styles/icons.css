@@ -25,6 +25,9 @@
 .icon-phone:before {
   content: "\e908";
 }
+.icon-search:before {
+  content: "\e90c";
+}
 .icon-sun:before {
   content: "\e909";
 }

@@ -1,21 +1,29 @@
 import algoliasearch from 'algoliasearch/lite';
 import React from 'react';
+import tw from 'twin.macro';
 import { times } from 'lodash';
 import { Link } from 'gatsby';
+import SearchItem, { SearchItemProps } from './search-item';
+import { Separator } from '../scaffolds';
 
 interface IndexDoc {
   id?: string;
   title?: string;
   image?: string;
   slug?: string;
+  excerpt?: string;
   primary_author?: {
     name?: string;
+    slug?: string;
   };
   tags?: {
     name?: string;
-  };
-  updated_at?: Date;
+    slug?: string;
+  }[];
+  published_at?: Date;
 }
+
+const PageLink = tw(Link)`text-primary font-bold cursor-pointer no-underline mr-2`;
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
@@ -26,10 +34,12 @@ const searchIndex = searchClient.initIndex('article_post');
 interface SearchProps {
   query?: string;
   page?: number;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 interface SearchState {
-  hits?: IndexDoc[];
+  hits?: SearchItemProps[];
   processingTimeMs?: number;
   query?: string;
   page?: number;
@@ -68,8 +78,24 @@ class Search extends React.Component<SearchProps, SearchState> {
         page: this.props.page - 1,
         hitsPerPage: 10,
       });
+      // map search results
       this.setState({
-        hits: resp.hits,
+        hits: resp.hits.map(hit => ({
+          id: hit.id,
+          author: {
+            name: hit.primary_author?.name ?? '',
+            slug: hit.primary_author?.slug ?? '',
+          },
+          tags: hit.tags.map(t => ({
+            name: t?.name ?? '',
+            slug: t?.slug ?? '',
+          })),
+          excerpt: hit.excerpt,
+          released: new Date(hit.published_at),
+          slug: hit.slug,
+          title: hit.title,
+          image: hit.image,
+        })),
         numberOfPages: resp.nbPages,
         processingTimeMs: resp.processingTimeMS,
       });
@@ -78,20 +104,23 @@ class Search extends React.Component<SearchProps, SearchState> {
 
   render() {
     const query = this.state.query;
-    const page = this.state.page;
+    const articles = this.state.hits;
 
     return (
-      <div>
-        <h3>
-          selesai melakukan pencarian "{query}" dalam {this.state.processingTimeMs} milidetik
-        </h3>
-        {this.state.hits.map(h => (
-          <p key={h.id}>{h.title}</p>
+      <div className={this.props.className} style={this.props.style}>
+        <h4 tw="mb-16">
+          Selesai melakukan pencarian "{query}" dalam {this.state.processingTimeMs} milidetik
+        </h4>
+        {articles.map((article, idx, articles) => (
+          <div>
+            <SearchItem key={article.slug} {...article} />
+            {idx + 1 < articles.length ? <Separator /> : ''}
+          </div>
         ))}
-        <div>
+        <div tw="my-16">
           {times(this.state.numberOfPages, n => {
-            const p = n + 1;
-            return <Link to={`/search/?query=${query}&page=${p}`}>{p}</Link>;
+            const pg = n + 1;
+            return <PageLink key={pg} to={`/search/?query=${query}&page=${pg}`}>{pg}</PageLink>;
           })}
         </div>
       </div>
