@@ -57,9 +57,9 @@ const menuToggleLightStyle = css`
 class HeaderComp extends React.Component<HeaderCompProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
-    this.setState({
+    this.state = {
       menuMobileActive: false,
-    });
+    };
   }
 
   render() {
